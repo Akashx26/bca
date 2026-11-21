@@ -1,0 +1,806 @@
+
+/* =====================================================
+   VISUAL STUDIO CODE
+   Application Layout - Dark+ Theme
+===================================================== */
+
+
+/* =====================================================
+   1. APPLICATION CONTAINER
+===================================================== */
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100vh;
+    min-height: 0;
+
+    overflow: hidden;
+    background: var(--bg-primary);
+}
+
+
+/* =====================================================
+   2. TITLE BAR
+===================================================== */
+
+.titlebar {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    height: var(--titlebar-height);
+    min-height: var(--titlebar-height);
+
+    padding: 0 10px;
+    gap: 16px;
+
+    background: #3c3c3c;
+    border-bottom: 1px solid #333333;
+
+    user-select: none;
+}
+
+
+/* Title Bar Left */
+
+.titlebar-left {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    flex-shrink: 0;
+}
+
+.vscode-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 20px;
+    height: 20px;
+
+    color: #007acc;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.window-title {
+    color: #cccccc;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   3. MENU BAR
+===================================================== */
+
+.menu-bar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.menu-item {
+    height: 27px;
+    padding: 0 8px;
+
+    color: #cccccc;
+    font-size: 12px;
+
+    background: transparent;
+    border-radius: 4px;
+
+    transition: background var(--transition-fast);
+}
+
+.menu-item:hover {
+    background: #505050;
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   4. COMMAND CENTER
+===================================================== */
+
+.titlebar-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 1;
+    min-width: 80px;
+}
+
+.command-center {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+
+    width: min(100%, 400px);
+    height: 26px;
+
+    padding: 0 9px;
+
+    color: #cccccc;
+    font-size: 12px;
+
+    background: #505050;
+    border: 1px solid transparent;
+    border-radius: 5px;
+
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.command-center:hover {
+    background: #606060;
+    border-color: #707070;
+}
+
+.command-icon {
+    font-size: 17px;
+    color: #cccccc;
+}
+
+.shortcut {
+    margin-left: auto;
+
+    color: #aaaaaa;
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   5. WINDOW CONTROLS
+===================================================== */
+
+.window-controls {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.window-controls button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 26px;
+
+    color: #cccccc;
+    font-size: 15px;
+
+    border-radius: 3px;
+}
+
+.window-controls button:hover {
+    background: #505050;
+}
+
+.window-controls button:last-child:hover {
+    background: #e81123;
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   6. MAIN WORKSPACE
+===================================================== */
+
+.workspace {
+    display: flex;
+    flex: 1;
+
+    width: 100%;
+    min-height: 0;
+
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* =====================================================
+   7. ACTIVITY BAR
+===================================================== */
+
+.activity-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    width: var(--activitybar-width);
+    min-width: var(--activitybar-width);
+    height: 100%;
+
+    background: var(--activity-bg);
+    border-right: 1px solid #252526;
+
+    z-index: 10;
+}
+
+.activity-top,
+.activity-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+}
+
+
+/* Activity Buttons */
+
+.activity-button {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 48px;
+
+    color: #858585;
+    font-size: 22px;
+
+    background: transparent;
+
+    transition:
+        color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.activity-button:hover {
+    color: #ffffff;
+}
+
+.activity-button.active {
+    color: var(--activity-active);
+}
+
+/* Active Indicator */
+
+.activity-button.active::before {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    top: 7px;
+    bottom: 7px;
+
+    width: 2px;
+
+    background: #ffffff;
+}
+
+
+/* =====================================================
+   8. MAIN CONTENT AREA
+===================================================== */
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+
+    height: 100%;
+
+    background: var(--editor-bg);
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   9. EDITOR TAB BAR
+===================================================== */
+
+.editor-tabbar {
+    display: flex;
+    align-items: stretch;
+
+    width: 100%;
+    height: var(--editor-tab-height);
+    min-height: var(--editor-tab-height);
+
+    background: var(--editor-tab-bg);
+    border-bottom: 1px solid var(--border-subtle);
+
+    overflow: hidden;
+}
+
+
+/* Manual Tabs */
+
+.manual-tabs {
+    display: flex;
+    align-items: stretch;
+
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scrollbar-width: none;
+}
+
+.manual-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.manual-tab {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    height: 100%;
+    min-width: 120px;
+    max-width: 190px;
+
+    padding: 0 12px;
+
+    background: #2d2d2d;
+    border-right: 1px solid #252526;
+    border-top: 1px solid transparent;
+
+    color: #969696;
+    font-size: 12px;
+
+    white-space: nowrap;
+
+    transition: background var(--transition-fast);
+}
+
+.manual-tab:hover {
+    background: #333333;
+    color: #ffffff;
+}
+
+.manual-tab.active {
+    background: var(--editor-tab-active);
+    color: #ffffff;
+
+    border-top: 1px solid var(--accent-color);
+}
+
+.tab-icon {
+    font-size: 13px;
+}
+
+.tab-close {
+    display: none;
+
+    margin-left: auto;
+    font-size: 16px;
+    color: #aaaaaa;
+}
+
+.manual-tab:hover .tab-close,
+.manual-tab.active .tab-close {
+    display: inline;
+}
+
+.tab-close:hover {
+    color: #ffffff;
+}
+
+
+/* Editor Actions */
+
+.editor-actions {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+
+    padding: 0 8px;
+
+    background: var(--editor-tab-bg);
+    flex-shrink: 0;
+}
+
+.editor-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 27px;
+    height: 27px;
+
+    color: #858585;
+    font-size: 17px;
+
+    border-radius: 3px;
+}
+
+.editor-actions button:hover {
+    color: #ffffff;
+    background: var(--bg-hover);
+}
+
+
+/* =====================================================
+   10. BREADCRUMB BAR
+===================================================== */
+
+.breadcrumb-bar {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    width: 100%;
+    height: 30px;
+    min-height: 30px;
+
+    padding: 0 20px;
+
+    background: var(--editor-bg);
+
+    color: #858585;
+    font-size: 12px;
+
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.breadcrumb-separator {
+    color: #666666;
+}
+
+#breadcrumb {
+    color: #cccccc;
+}
+
+
+/* =====================================================
+   11. EDITOR SCROLL AREA
+===================================================== */
+
+.editor-scroll-area {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+
+    width: 100%;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: var(--editor-bg);
+}
+
+
+/* =====================================================
+   12. WELCOME SCREEN
+===================================================== */
+
+.welcome-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 100%;
+
+    padding: 40px 24px;
+
+    text-align: center;
+}
+
+.welcome-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100px;
+    height: 100px;
+
+    margin-bottom: 28px;
+
+    border: 2px solid #007acc;
+    border-radius: 22px;
+
+    background: #252526;
+}
+
+.welcome-logo-symbol {
+    color: #4fc1ff;
+
+    font-family: var(--font-code);
+    font-size: 38px;
+    font-weight: bold;
+}
+
+.welcome-screen h1 {
+    margin-bottom: 12px;
+
+    color: #cccccc;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.welcome-screen p {
+    max-width: 480px;
+
+    color: #858585;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* Welcome Shortcuts */
+
+.welcome-shortcuts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.shortcut-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: #858585;
+    font-size: 11px;
+}
+
+.shortcut-key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 20px;
+    height: 20px;
+
+    background: #333333;
+    border: 1px solid #454545;
+    border-radius: 3px;
+
+    color: #cccccc;
+    font-size: 10px;
+}
+
+.shortcut-arrow {
+    color: #666666;
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   13. STATUS BAR
+===================================================== */
+
+.statusbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: var(--statusbar-height);
+    min-height: var(--statusbar-height);
+
+    padding: 0 10px;
+
+    background: #007acc;
+    color: #ffffff;
+
+    font-size: 11px;
+
+    user-select: none;
+}
+
+.statusbar-left,
+.statusbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    height: 100%;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    height: 100%;
+    white-space: nowrap;
+}
+
+.status-indicator {
+    width: 7px;
+    height: 7px;
+
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.statusbar-right span {
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   14. MOBILE SIDEBAR CONTROLS
+===================================================== */
+
+.menu-toggle {
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    min-width: 38px;
+    height: 100%;
+
+    color: #cccccc;
+    font-size: 19px;
+
+    background: transparent;
+}
+
+.menu-toggle:hover {
+    background: var(--bg-hover);
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+.sidebar-close {
+    display: none;
+}
+
+
+/* =====================================================
+   15. RESPONSIVE LAYOUT - TABLETS
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    .titlebar {
+        gap: 10px;
+    }
+
+    .menu-bar {
+        gap: 0;
+    }
+
+    .menu-item {
+        padding: 0 5px;
+        font-size: 11px;
+    }
+
+    .command-center {
+        width: min(100%, 250px);
+    }
+
+    .shortcut {
+        display: none;
+    }
+
+}
+
+
+/* =====================================================
+   16. RESPONSIVE LAYOUT - SMALL SCREENS
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .titlebar {
+        height: 38px;
+        min-height: 38px;
+
+        justify-content: space-between;
+    }
+
+    .menu-bar {
+        display: none;
+    }
+
+    .titlebar-center {
+        display: none;
+    }
+
+    .window-controls {
+        margin-left: auto;
+    }
+
+    .activity-bar {
+        display: none;
+    }
+
+    .editor-tabbar {
+        height: 38px;
+        min-height: 38px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .editor-actions {
+        display: none;
+    }
+
+    .breadcrumb-bar {
+        padding: 0 12px;
+        font-size: 11px;
+    }
+
+    .welcome-screen {
+        padding: 30px 16px;
+    }
+
+    .welcome-screen h1 {
+        font-size: 21px;
+    }
+
+    .welcome-shortcuts {
+        gap: 8px;
+    }
+
+    .statusbar {
+        padding: 0 6px;
+        font-size: 10px;
+    }
+
+    .statusbar-left,
+    .statusbar-right {
+        gap: 8px;
+    }
+
+}
+
+
+/* =====================================================
+   17. VERY SMALL SCREENS
+===================================================== */
+
+@media (max-width: 400px) {
+
+    .window-title {
+        font-size: 11px;
+    }
+
+    .welcome-logo {
+        width: 75px;
+        height: 75px;
+    }
+
+    .welcome-logo-symbol {
+        font-size: 30px;
+    }
+
+    .statusbar-right span:nth-child(n + 3) {
+        display: none;
+    }
+
+}

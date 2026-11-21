@@ -1,0 +1,215 @@
+
+/* =========================================
+   VS CODE RESPONSIVE LAYOUT
+========================================= */
+
+/* =========================================
+   TABLETS AND SMALL LAPTOPS
+========================================= */
+
+@media (max-width: 1000px) {
+    :root {
+        --sidebar-width: 240px;
+    }
+
+    .editor-scroll-area {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    #programContent {
+        max-width: 100%;
+    }
+}
+
+/* =========================================
+   MOBILE DEVICES
+========================================= */
+
+@media (max-width: 700px) {
+    .titlebar {
+        min-width: 0;
+    }
+
+    .titlebar-left {
+        min-width: 0;
+    }
+
+    .window-title {
+        font-size: 12px;
+    }
+
+    .menu-bar {
+        display: none;
+    }
+
+    .titlebar-center {
+        display: none;
+    }
+
+    .window-controls {
+        display: none;
+    }
+
+    .workspace {
+        position: relative;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .activity-bar {
+        display: none;
+    }
+
+    .sidebar {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 30;
+        width: min(280px, 85vw);
+        max-width: 85vw;
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+        box-shadow: none;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 8px 0 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .sidebar-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity 0.2s ease,
+            visibility 0.2s ease;
+    }
+
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .main-content {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .editor-tabbar {
+        min-width: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    .editor-tabbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .manual-tabs {
+        flex: 1;
+        min-width: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .manual-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .manual-tab {
+        flex: 0 0 auto;
+        min-width: 105px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .editor-actions {
+        flex: 0 0 auto;
+    }
+
+    .breadcrumb-bar {
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+    }
+
+    .breadcrumb-bar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .editor-scroll-area {
+        padding: 18px 16px;
+    }
+
+    #programTitle {
+        font-size: 19px;
+    }
+
+    .code-container pre {
+        font-size: 12px;
+    }
+
+    .statusbar-right .status-item {
+        display: none;
+    }
+
+    .statusbar-right .status-item:last-child {
+        display: flex;
+    }
+}
+
+/* =========================================
+   VERY SMALL MOBILE SCREENS
+========================================= */
+
+@media (max-width: 400px) {
+    .vscode-logo {
+        margin-right: 5px;
+    }
+
+    .window-title {
+        font-size: 11px;
+    }
+
+    .manual-tab {
+        min-width: 95px;
+        font-size: 11px;
+    }
+
+    .editor-scroll-area {
+        padding: 14px 12px;
+    }
+
+    #programTitle {
+        font-size: 17px;
+    }
+
+    .code-toolbar {
+        min-height: 34px;
+        padding: 0 8px;
+    }
+
+    .copy-button {
+        font-size: 10px;
+    }
+
+    .code-container pre {
+        padding: 12px;
+        font-size: 11px;
+    }
+
+    .statusbar {
+        font-size: 10px;
+    }
+}

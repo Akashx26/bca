@@ -1,0 +1,410 @@
+
+/* =========================================
+   VS CODE EDITOR AREA
+========================================= */
+
+.editor-scroll-area {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    overflow: auto;
+    background: var(--editor-bg);
+    padding: 24px 5%;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+.editor-scroll-area::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.editor-scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.editor-scroll-area::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+}
+
+/* =========================================
+   WELCOME SCREEN
+========================================= */
+
+.welcome-screen {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 30px 15px;
+}
+
+.welcome-logo {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    border: 1px solid var(--accent-color);
+    border-radius: 22px;
+    background: var(--bg-secondary);
+}
+
+.welcome-logo-symbol {
+    color: var(--accent-color);
+    font-size: 64px;
+    line-height: 1;
+}
+
+.welcome-screen h1 {
+    margin: 0 0 12px;
+    color: var(--text-primary);
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.welcome-screen p {
+    max-width: 500px;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.welcome-shortcuts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.shortcut-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.shortcut-key {
+    min-width: 75px;
+    padding: 4px 7px;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: var(--font-code);
+    text-align: center;
+}
+
+.shortcut-arrow {
+    color: var(--text-muted);
+}
+
+/* =========================================
+   PROGRAM CONTENT
+========================================= */
+
+#programContent {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+#programContent[hidden],
+#welcomeScreen[hidden] {
+    display: none !important;
+}
+
+#programTitle {
+    margin: 8px 0 24px;
+    color: var(--text-primary);
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================
+   AIM SECTION
+========================================= */
+
+#aimSection {
+    margin-bottom: 28px;
+}
+
+#aimSection h2 {
+    margin: 0 0 10px;
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#programAim {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+/* =========================================
+   PROGRAM SECTIONS
+========================================= */
+
+#programSections {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+.program-section {
+    width: 100%;
+    min-width: 0;
+}
+
+.program-section h2,
+.program-section h3 {
+    margin: 0 0 12px;
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.program-section p {
+    margin: 0 0 12px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+/* =========================================
+   CODE CONTAINER
+========================================= */
+
+.code-container {
+    width: 100%;
+    min-width: 0;
+    margin: 12px 0 20px;
+    overflow: hidden;
+    border: 1px solid #3c3c3c;
+    border-radius: 4px;
+    background: #1e1e1e;
+}
+
+/* =========================================
+   CODE TOOLBAR
+   Matches app.js generated class names
+========================================= */
+
+.code-toolbar {
+    width: 100%;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 12px;
+    background: #252526;
+    border-bottom: 1px solid #3c3c3c;
+    box-sizing: border-box;
+}
+
+.code-language {
+    display: inline-flex;
+    align-items: center;
+    color: #9da0a5;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+/* =========================================
+   COPY CODE BUTTON
+========================================= */
+
+.copy-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 26px;
+    padding: 4px 9px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background: transparent;
+    color: #cccccc;
+    font-family: var(--font-primary);
+    font-size: 11px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.copy-button:hover {
+    background: #37373d;
+    border-color: #454545;
+    color: #ffffff;
+}
+
+.copy-button:active {
+    background: #444444;
+}
+
+.copy-button.copied {
+    color: #89d185;
+}
+
+.copy-button:focus-visible {
+    outline: 1px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* =========================================
+   CODE CONTENT
+========================================= */
+
+.code-container pre {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    font-family: var(--font-code);
+    font-size: 13px;
+    line-height: 1.65;
+    tab-size: 4;
+    white-space: pre;
+    scrollbar-width: thin;
+    scrollbar-color: #555 transparent;
+    box-sizing: border-box;
+}
+
+.code-container code {
+    display: block;
+    min-width: max-content;
+    font-family: var(--font-code);
+    font-size: inherit;
+    line-height: inherit;
+    white-space: pre;
+}
+
+/* =========================================
+   PRISM PYTHON SYNTAX HIGHLIGHTING
+========================================= */
+
+.code-container pre[class*="language-"],
+.code-container code[class*="language-"] {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    text-shadow: none;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype {
+    color: #6a9955;
+}
+
+.token.keyword {
+    color: #569cd6;
+}
+
+.token.string,
+.token.char {
+    color: #ce9178;
+}
+
+.token.number,
+.token.boolean {
+    color: #b5cea8;
+}
+
+.token.function {
+    color: #dcdcaa;
+}
+
+.token.class-name {
+    color: #4ec9b0;
+}
+
+.token.operator,
+.token.punctuation {
+    color: #d4d4d4;
+}
+
+.token.builtin {
+    color: #4ec9b0;
+}
+
+.token.decorator {
+    color: #dcdcaa;
+}
+
+/* =========================================
+   COPY FEEDBACK
+========================================= */
+
+.copy-message {
+    color: #89d185;
+    font-size: 11px;
+}
+
+/* =========================================
+   RESPONSIVE EDITOR
+========================================= */
+
+@media (max-width: 700px) {
+    .editor-scroll-area {
+        padding: 18px 16px;
+    }
+
+    #programContent {
+        max-width: 100%;
+    }
+
+    #programTitle {
+        font-size: 19px;
+        margin-bottom: 20px;
+    }
+
+    #aimSection h2,
+    .program-section h2,
+    .program-section h3 {
+        font-size: 15px;
+    }
+
+    #programAim,
+    .program-section p {
+        font-size: 13px;
+    }
+
+    .code-container pre {
+        padding: 14px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .editor-scroll-area {
+        padding: 14px 12px;
+    }
+
+    #programTitle {
+        font-size: 17px;
+    }
+
+    .code-container pre {
+        font-size: 11px;
+    }
+}

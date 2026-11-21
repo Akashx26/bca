@@ -1,0 +1,215 @@
+{
+  "manualId": "lab-manual-1",
+  "manualTitle": "Lab Manual 1",
+  "sourceFile": "lab programs.pdf",
+  "programCount": 16,
+  "programs": [
+    {
+      "id": "lab1-program-01",
+      "number": 1,
+      "question": "Perform data pre-processing on a healthcare dataset by handling missing values, Encoding categorical variables, and applying normalization techniques. Analyse the dataset using Summary statistics and visualizations. Dataset: Pima Indians Diabetes Dataset https://www.kaggle.com/datasets/uciml/pima-indians- diabetes-database Tools Used: Python, Pandas, NumPy, Matplotlib",
+      "language": "python",
+      "code": "import pandas as pd \nimport numpy as np \nimport matplotlib.pyplot as plt \nimport seaborn as sns \n  \ndf = pd.read_csv('diabetes.csv') \n \n# 1. Handle missing values (zeros in certain columns represent missing) \ncols_with_zeros = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI'] \nfor col in cols_with_zeros: \n    df[col] = df[col].replace(0, np.nan)  # Replace 0 with NaN \n    df[col] = df[col].fillna(df[col].median())  # Fill with median \n \n# 2. Summary statistics \nprint(\"Summary Statistics:\") \nprint(df.describe()) \nprint(f\"\\nMissing values:\\n{df.isnull().sum()}\") \n \n# 3. Normalization (Min-Max scaling) \nfrom sklearn.preprocessing import MinMaxScaler \nscaler = MinMaxScaler() \nfeature_cols = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', \n                'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'] \ndf[feature_cols] = scaler.fit_transform(df[feature_cols]) \nprint(\"\\nAfter normalization:\\n\", df.describe()) \n \n# 4. Visualizations \nplt.figure(figsize=(15, 10)) \n \nplt.subplot(221) \ndf['Outcome'].value_counts().plot(kind='bar') \nplt.title('Class Distribution') \n \nplt.subplot(222) \nsns.histplot(df['Glucose'], bins=30) \nplt.title('Glucose Distribution') \n \nplt.subplot(223) \n\nsns.boxplot(x='Outcome', y='Age', data=df) \nplt.title('Age vs Outcome') \n \nplt.subplot(224) \ncorr = df.corr() \nsns.heatmap(corr, annot=True, cmap='coolwarm') \nplt.title('Correlation Matrix') \n \nplt.tight_layout() \nplt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-02",
+      "number": 2,
+      "question": "Develop a Linear Regression model to predict the fuel efficiency (miles per gallon) of automobiles based on various features and evaluate the model using MSE and R' score. Dataset: Auto MPG Dataset https://archive.ics.uci.edu/ml/datasets/auto+mpg Tools Used: Python, Scikit-learn, Pandas.",
+      "language": "python",
+      "code": "import pandas as pd \nfrom sklearn.model_selection import train_test_split \nfrom sklearn.linear_model import LinearRegression \nfrom sklearn.metrics import mean_squared_error, r2_score \nimport matplotlib.pyplot as plt \n \n# Load dataset \ndf = pd.read_csv(r\"D:\\Auto.csv\") \n \nprint(\"Dataset loaded successfully!\") \nprint(\"Number of rows:\", len(df)) \nprint(df.head()) \n \n \n \n# Handle missing values \ndf[\"horsepower\"] = pd.to_numeric(df[\"horsepower\"], errors=\"coerce\") \ndf = df.dropna() \n \n# Features and target \nX = df.drop(\"mpg\", axis=1) \ny = df[\"mpg\"] \n \n# Split dataset \nX_train, X_test, y_train, y_test = train_test_split( \n    X, y, test_size=0.2, random_state=42 \n) \n \n# Create and train model \n\nmodel = LinearRegression() \nmodel.fit(X_train, y_train) \n \n# Prediction \ny_pred = model.predict(X_test) \n \n# Evaluation \nmse = mean_squared_error(y_test, y_pred) \nr2 = r2_score(y_test, y_pred) \n \nprint(\"Mean Squared Error:\", round(mse, 4)) \nprint(\"R-squared Score:\", round(r2, 4)) \n \n# Plot \nplt.scatter(y_test, y_pred) \nplt.xlabel(\"Actual MPG\") \nplt.ylabel(\"Predicted MPG\") \nplt.title(\"Actual vs Predicted MPG\") \nplt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-03",
+      "number": 3,
+      "question": "Build a Logistic Regression model to predict whether a tumor is malignant or benign and evaluate the model using a confusion matrix and accuracy score. Dataset: Wisconsin https://archive.ics.uci.edu/ml/datasets/breasttcancertwisconsin+(diagnostic) Tools Used: Python, Scikit-learn, Pandas",
+      "language": "python",
+      "code": "import pandas as pd \nimport numpy as np \nfrom sklearn.datasets import load_breast_cancer \nfrom sklearn.model_selection import train_test_split \nfrom sklearn.linear_model import LogisticRegression \nfrom sklearn.metrics import accuracy_score, confusion_matrix, classification_report \nimport matplotlib.pyplot as plt \nimport seaborn as sns \n \n# Load dataset \ncancer = load_breast_cancer() \nX = pd.DataFrame(cancer.data, columns=cancer.feature_names) \ny = cancer.target \n \nprint(f\"Dataset: {X.shape[0]} samples, {X.shape[1]} features\") \nprint(f\"Classes: {cancer.target_names}\") \n \nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) \n \n# Train Logistic Regression \n\nmodel = LogisticRegression(max_iter=1000) \nmodel.fit(X_train, y_train) \ny_pred = model.predict(X_test) \ny_prob = model.predict_proba(X_test)[:, 1] \n \n# Evaluate \nacc = accuracy_score(y_test, y_pred) \ncm = confusion_matrix(y_test, y_pred) \n \nprint(f\"Accuracy: {acc:.4f}\") \nprint(f\"Confusion Matrix:\\n{cm}\") \nprint(f\"\\nClassification Report:\\n{classification_report(y_test, y_pred, \ntarget_names=cancer.target_names)}\") \n \n# Plot confusion matrix \nplt.figure(figsize=(6, 5)) \nsns.heatmap(cm, annot=True, fmt='d', cmap='Blues', \n           xticklabels=cancer.target_names, yticklabels=cancer.target_names) \nplt.xlabel('Predicted'); plt.ylabel('True'); plt.title('Confusion Matrix') \nplt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-04",
+      "number": 4,
+      "question": "Implement the KNN algorithm to classify different types of glass based on their chemical properties and analyze the effect of varying K values on model performance.",
+      "language": "python",
+      "code": "import pandas as pd \nimport numpy as np \nfrom sklearn.model_selection import train_test_split \nfrom sklearn.neighbors import KNeighborsClassifier \nfrom sklearn.metrics import accuracy_score, classification_report \nimport matplotlib.pyplot as plt \n \n# Load Glass dataset \nurl = 'https://archive.ics.uci.edu/ml/machine-learning-databases/glass/glass.data' \ncolumns = ['id', 'RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe', 'type'] \ndf = pd.read_csv(url, names=columns) \ndf = df.drop('id', axis=1) \n \nX = df.drop('type', axis=1) \ny = df['type'] \n \nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42) \n \n# Experiment with different K values \nk_values = range(1, 21) \naccuracies = [] \n\n \nfor k in k_values: \n   knn = KNeighborsClassifier(n_neighbors=k) \n   knn.fit(X_train, y_train) \n   acc = accuracy_score(y_test, knn.predict(X_test)) \n   accuracies.append(acc) \n   print(f\"K={k:2d}  Accuracy={acc:.4f}\") \n \nbest_k = k_values[np.argmax(accuracies)] \nprint(f\"\\nBest K: {best_k} with accuracy {max(accuracies):.4f}\") \n \n# Final model \nfinal_knn = KNeighborsClassifier(n_neighbors=best_k) \nfinal_knn.fit(X_train, y_train) \ny_pred = final_knn.predict(X_test) \nprint(f\"\\nClassification Report:\\n{classification_report(y_test, y_pred)}\") \n \n# Plot \nplt.figure(figsize=(10, 6)) \nplt.plot(k_values, accuracies, 'bo-', linewidth=2, markersize=8) \nplt.axvline(x=best_k, color='r', linestyle='--', alpha=0.5) \nplt.xlabel('K Value'); plt.ylabel('Accuracy') \nplt.title('Glass Classification: Accuracy vs K') \nplt.grid(True); plt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-05",
+      "number": 5,
+      "question": "Construct a Decision Tree classifier to predict whether a bank customer will subscribe to a tern deposit and evaluate the model using accuracy and precision Used. Pyon, Sokikeam, Maplothps//archive.isucied/l/datascisbank-marketing Tools",
+      "language": "python",
+      "code": "import pandas as pd \nimport numpy as np \nfrom sklearn.model_selection import train_test_split \nfrom sklearn.tree import DecisionTreeClassifier, plot_tree \nfrom sklearn.metrics import accuracy_score, precision_score, classification_report \nimport matplotlib.pyplot as plt \n \n# Read the dataset \ndf = pd.read_csv('bank-additional.csv', sep=';') \n \n# Convert target: yes = 1, no = 0 \ndf['y'] = df['y'].map({'yes': 1, 'no': 0}) \n \n# Select only numeric columns \nnumeric_cols = df.select_dtypes(include=[np.number]).columns.tolist() \n \n# Separate input features and target \n\nX = df[numeric_cols].drop(columns=['y']) \ny = df['y'] \n \n# Split the dataset \nX_train, X_test, y_train, y_test = train_test_split( \n    X, y, test_size=0.3, random_state=42 \n) \n \n# Create Decision Tree \ndt = DecisionTreeClassifier( \n    max_depth=5, \n    criterion='entropy', \n    random_state=42 \n) \n \n# Train the model \ndt.fit(X_train, y_train) \n \n# Predict \ny_pred = dt.predict(X_test) \n \n# Calculate accuracy and precision \nacc = accuracy_score(y_test, y_pred) \nprec = precision_score(y_test, y_pred, zero_division=0) \n \nprint(f\"Accuracy: {acc:.4f}\") \nprint(f\"Precision: {prec:.4f}\") \n \nprint(\"\\nClassification Report:\") \nprint(classification_report(y_test, y_pred, zero_division=0)) \n \n# Feature importance \nfeat_imp = sorted( \n    zip(X.columns, dt.feature_importances_), \n    key=lambda x: x[1], \n    reverse=True \n) \n \nprint(\"\\nTop 5 Features:\") \nfor name, imp in feat_imp[:5]: \n    print(f\"{name}: {imp:.4f}\") \n \n# Display Decision Tree \nplt.figure(figsize=(20, 12)) \n \n\nplot_tree( \n    dt, \n    filled=True, \n    feature_names=X.columns.tolist(), \n    class_names=['No', 'Yes'], \n    rounded=True, \n    max_depth=3 \n) \n \nplt.title('Decision Tree - Bank Marketing') \nplt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-06",
+      "number": 6,
+      "question": "Build and train a basic perceptron for binary classification including simple AND, OR functions.",
+      "language": "python",
+      "code": "import numpy as np \n \nclass Perceptron: \n \n    def __init__(self, learning_rate=0.01, epochs=100): \n        self.lr = learning_rate \n        self.epochs = epochs \n        self.weights = None \n        self.bias = None \n \n    def activation(self, x): \n        return 1 if x >= 0 else 0 \n \n    def fit(self, X, y): \n        n_samples, n_features = X.shape \n \n        self.weights = np.zeros(n_features) \n        self.bias = 0 \n \n        for epoch in range(self.epochs): \n            errors = 0 \n \n            for idx, x_i in enumerate(X): \n                linear_output = np.dot(x_i, self.weights) + self.bias \n \n                y_pred = self.activation(linear_output) \n \n                update = self.lr * (y[idx] - y_pred) \n \n                self.weights += update * x_i \n                self.bias += update \n\n \n                errors += int(update != 0) \n \n            if errors == 0: \n                print(f\"Converged at epoch {epoch + 1}\") \n                break \n \n    def predict(self, X): \n        return np.array([ \n            self.activation(np.dot(x, self.weights) + self.bias) \n            for x in X \n        ]) \n \n \n# AND Gate \nX_and = np.array([ \n    [0, 0], \n    [0, 1], \n    [1, 0], \n    [1, 1] \n]) \n \ny_and = np.array([0, 0, 0, 1]) \n \np_and = Perceptron(learning_rate=0.1, epochs=50) \n \np_and.fit(X_and, y_and) \n \nprint(\"\\nAND Gate:\") \nprint(f\"Weights: {p_and.weights}\") \nprint(f\"Bias: {p_and.bias}\") \nprint(f\"Predictions: {p_and.predict(X_and)}\") \n \n \n# OR Gate \nX_or = np.array([ \n    [0, 0], \n    [0, 1], \n    [1, 0], \n    [1, 1] \n]) \n \ny_or = np.array([0, 1, 1, 1]) \n \np_or = Perceptron(learning_rate=0.1, epochs=50) \n\n \np_or.fit(X_or, y_or) \n \nprint(\"\\nOR Gate:\") \nprint(f\"Weights: {p_or.weights}\") \nprint(f\"Bias: {p_or.bias}\") \nprint(f\"Predictions: {p_or.predict(X_or)}\")",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-07",
+      "number": 7,
+      "question": "Implement and visualize different activation functions: Step, Sigmoid, Tanh, and ReLU.",
+      "language": "python",
+      "code": "import numpy as np \nimport matplotlib.pyplot as plt \n \ndef step(x): \n    return np.where(x >= 0, 1, 0) \n \ndef sigmoid(x): \n    return 1 / (1 + np.exp(-x)) \n \ndef tanh(x): \n    return np.tanh(x) \n \ndef relu(x): \n    return np.maximum(0, x) \n \n \n# Generate input values \nx = np.linspace(-10, 10, 1000) \n \n# Compute outputs \ny_step = step(x) \ny_sigmoid = sigmoid(x) \ny_tanh = tanh(x) \ny_relu = relu(x) \n \n \n# Create plots \nplt.figure(figsize=(14, 10)) \n \nfunctions = [ \n    ('Step', y_step), \n    ('Sigmoid', y_sigmoid), \n    ('Tanh', y_tanh), \n    ('ReLU', y_relu) \n] \n\n \nfor i, (name, y_vals) in enumerate(functions, 1): \n \n    plt.subplot(2, 2, i) \n \n    plt.plot(x, y_vals, linewidth=2) \n \n    plt.axhline(y=0, linestyle='--', alpha=0.5) \n    plt.axvline(x=0, linestyle='-', alpha=0.5) \n \n    plt.title(f'{name} Activation Function') \n    plt.xlabel('Input') \n    plt.ylabel('Output') \n \n    plt.grid(True, alpha=0.3) \n \n    if name != 'ReLU': \n        plt.ylim(-1.5, 1.5) \n    else: \n        plt.ylim(-1, 5) \n \n \n# Print properties \nfor name, y_vals in functions: \n \n    print(f'\\n{name}:') \n    print(f'Output range: [{y_vals.min():.2f}, {y_vals.max():.2f}]') \n \n    print( \n        f\"Differentiable: {'No' if name == 'Step' else 'Yes'}\" \n    ) \n \n    if name != 'Step': \n \n        if name == 'Sigmoid': \n            derivative = \"o(x) * (1 - o(x))\" \n \n        elif name == 'Tanh': \n            derivative = \"1 - tanh(x)^2\" \n \n        else: \n            derivative = \"0 if x < 0, 1 if x > 0\" \n \n        print(f'Derivative: {derivative}') \n \n\n \nplt.tight_layout() \nplt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-08",
+      "number": 8,
+      "question": "Create a single-layer perceptron to classify a simple dataset (e.g., XOR problem).",
+      "language": "python",
+      "code": "import numpy as np \n \n \nclass Perceptron: \n \n    def __init__(self, lr=0.1, epochs=100): \n        self.lr = lr \n        self.epochs = epochs \n        self.weights = None \n        self.bias = None \n \n    def activation(self, x): \n        return 1 if x >= 0 else 0 \n \n    def fit(self, X, y): \n        n_samples, n_features = X.shape \n \n        self.weights = np.zeros(n_features) \n        self.bias = 0 \n \n        for epoch in range(self.epochs): \n            errors = 0 \n \n            for idx, x_i in enumerate(X): \n \n                linear = np.dot(x_i, self.weights) + self.bias \n \n                y_pred = self.activation(linear) \n \n                update = self.lr * (y[idx] - y_pred) \n \n                self.weights += update * x_i \n                self.bias += update \n \n                errors += int(update != 0) \n \n            if errors == 0: \n                print(f\"Converged at epoch {epoch + 1}\") \n                return True \n\n \n        return False \n \n \n    def predict(self, X): \n        predictions = [] \n \n        for x_i in X: \n            linear = np.dot(x_i, self.weights) + self.bias \n            y_pred = self.activation(linear) \n            predictions.append(y_pred) \n \n        return np.array(predictions) \n \n \n# XOR dataset (linearly inseparable) \nX_xor = np.array([ \n    [0, 0], \n    [0, 1], \n    [1, 0], \n    [1, 1] \n]) \n \ny_xor = np.array([0, 1, 1, 0]) \n \n \nprint(\"XOR Problem - Single Layer Perceptron\") \nprint(\"=\" * 40) \n \nprint(f\"Input:\\n{X_xor}\") \nprint(f\"Expected: {y_xor}\") \n \n \n# Create perceptron \np = Perceptron(lr=0.1, epochs=200) \n \n# Train perceptron \nconverged = p.fit(X_xor, y_xor) \n \n# Make predictions \npredictions = p.predict(X_xor) \n \n \nprint(f\"\\nWeights: {p.weights}\") \nprint(f\"Bias: {p.bias}\") \n\nprint(f\"Predictions: {predictions}\") \nprint(f\"Correct: {np.array_equal(predictions, y_xor)}\") \nprint(f\"Converged: {converged}\") \n \nprint(\"\\nSingle-layer perceptron CANNOT solve XOR\") \nprint(\"because XOR is linearly inseparable.\")",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-09",
+      "number": 9,
+      "question": "Use a single-layer perceptron to visualize decision boundaries on 2D data.",
+      "language": "python",
+      "code": "import numpy as np \nimport matplotlib.pyplot as plt \nfrom sklearn.datasets import make_classification \nfrom sklearn.linear_model import Perceptron \n \n \n# Generate 2D linearly separable data \nX, y = make_classification( \n    n_samples=100, \n    n_features=2, \n    n_redundant=0, \n    n_clusters_per_class=1, \n    random_state=42 \n) \n \n \n# Train Perceptron \np = Perceptron(max_iter=100, random_state=42) \np.fit(X, y) \n \n \n# Create mesh grid for decision boundary \nx_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1 \ny_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1 \n \nxx, yy = np.meshgrid( \n    np.arange(x_min, x_max, 0.02), \n    np.arange(y_min, y_max, 0.02) \n) \n \n \n# Predict for every point in the grid \nZ = p.predict(np.c_[xx.ravel(), yy.ravel()]) \nZ = Z.reshape(xx.shape) \n \n \n\n# Plot decision regions \nplt.figure(figsize=(10, 8)) \n \nplt.contourf( \n    xx, \n    yy, \n    Z, \n    alpha=0.3, \n    cmap=plt.cm.coolwarm \n) \n \n \n# Plot data points \nplt.scatter( \n    X[:, 0], \n    X[:, 1], \n    c=y, \n    cmap=plt.cm.coolwarm, \n    edgecolors='k', \n    s=60 \n) \n \n \n# Get weights and bias \nw = p.coef_[0] \nb = p.intercept_[0] \n \n \n# Plot decision boundary line \nx_line = np.array([x_min, x_max]) \ny_line = -(w[0] * x_line + b) / w[1] \n \nplt.plot( \n    x_line, \n    y_line, \n    'k--', \n    linewidth=2, \n    label='Decision Boundary' \n) \n \n \n# Decision boundary equation \nequation = f\"y = {(-w[0] / w[1]):.2f}x + {(-b / w[1]):.2f}\" \n \n \n\n# Print results \nprint(f\"Weights: {w}\") \nprint(f\"Bias: {b}\") \n \nprint( \n    f\"Decision boundary: \" \n    f\"{w[0]:.2f}x1 + {w[1]:.2f}x2 + {b:.2f} = 0\" \n) \n \nprint(f\"Line equation: {equation}\") \n \n \n# Labels and title \nplt.xlabel('Feature 1') \nplt.ylabel('Feature 2') \nplt.title('Perceptron Decision Boundary') \nplt.legend() \nplt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-10",
+      "number": 10,
+      "question": "Build a basic Multilayer Perceptron with one hidden layer to solve a classification problem",
+      "language": "python",
+      "code": "import numpy as np \nimport matplotlib.pyplot as plt \nfrom sklearn.datasets import make_moons \nfrom sklearn.model_selection import train_test_split \nfrom tensorflow.keras.models import Sequential \nfrom tensorflow.keras.layers import Dense \nfrom tensorflow.keras.optimizers import Adam \n \n# Generate dataset \nX, y = make_moons(n_samples=500, noise=0.2, random_state=42) \n \n# Split dataset \nX_train, X_test, y_train, y_test = train_test_split( \n    X, y, test_size=0.2, random_state=42) \n \n# Build MLP model \nmodel = Sequential([ \n    Dense(16, activation='relu', input_shape=(2,)), \n    Dense(1, activation='sigmoid') \n]) \n \n# Compile model \nmodel.compile( \n    optimizer=Adam(learning_rate=0.01), \n\n    loss='binary_crossentropy', \n    metrics=['accuracy'] \n) \n \n# Display model structure \nmodel.summary() \n \n# Train model \nhistory = model.fit( \n    X_train, y_train, \n    epochs=50, \n    batch_size=32, \n    validation_data=(X_test, y_test), \n    verbose=1 \n) \n \n# Evaluate model \ntrain_acc = model.evaluate(X_train, y_train, verbose=0)[1] \ntest_acc = model.evaluate(X_test, y_test, verbose=0)[1] \n \nprint(f\"\\nTraining Accuracy: {train_acc:.4f}\") \nprint(f\"Test Accuracy: {test_acc:.4f}\") \n \n# Create decision boundary \nx_min, x_max = X[:, 0].min()-0.5, X[:, 0].max()+0.5 \ny_min, y_max = X[:, 1].min()-0.5, X[:, 1].max()+0.5 \n \nxx, yy = np.meshgrid( \n    np.arange(x_min, x_max, 0.02), \n    np.arange(y_min, y_max, 0.02) \n) \n \ngrid = np.c_[xx.ravel(), yy.ravel()] \npredictions = model.predict(grid, verbose=0) \nZ = (predictions > 0.5).astype(int).reshape(xx.shape) \n \n# Plot results \nplt.figure(figsize=(12, 5)) \n \nplt.subplot(121) \nplt.contourf(xx, yy, Z, alpha=0.3, cmap=plt.cm.coolwarm) \nplt.scatter(X[:, 0], X[:, 1], c=y, \n            cmap=plt.cm.coolwarm, edgecolors='k') \nplt.title('MLP Decision Boundary') \n \n\nplt.subplot(122) \nplt.plot(history.history['accuracy'], label='Train') \nplt.plot(history.history['val_accuracy'], label='Test') \nplt.xlabel('Epoch') \nplt.ylabel('Accuracy') \nplt.legend() \nplt.grid(True) \nplt.title('Training History') \n \nplt.tight_layout() \nplt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-11",
+      "number": 11,
+      "question": "Implement the backpropagation algorithm and train an MLP on a small dataset (e.g., Iris dataset).",
+      "language": "python",
+      "code": "import numpy as np \nimport matplotlib.pyplot as plt \n \nfrom sklearn.datasets import load_iris \nfrom sklearn.model_selection import train_test_split \nfrom sklearn.preprocessing import OneHotEncoder, StandardScaler \n \nfrom tensorflow.keras.models import Sequential \nfrom tensorflow.keras.layers import Dense \nfrom tensorflow.keras.optimizers import SGD \n \n# Load Iris dataset \niris = load_iris() \nX = iris.data \ny = iris.target \n \n# One-hot encode labels \nencoder = OneHotEncoder(sparse_output=False) \ny_encoded = encoder.fit_transform(y.reshape(-1, 1)) \n \n# Split dataset into training and testing data \nX_train, X_test, y_train, y_test = train_test_split( \n    X, y_encoded, test_size=0.2, random_state=42 \n) \n \n# Standardize the data \nscaler = StandardScaler() \nX_train = scaler.fit_transform(X_train) \nX_test = scaler.transform(X_test) \n \n\n# Build MLP model \nmodel = Sequential([ \n    Dense(10, activation='relu', input_shape=(4,)), \n    Dense(10, activation='relu'), \n    Dense(3, activation='softmax') \n]) \n \n# Compile the model \nmodel.compile( \n    optimizer=SGD(learning_rate=0.01, momentum=0.9), \n    loss='categorical_crossentropy', \n    metrics=['accuracy'] \n) \n \n# Display model architecture \nmodel.summary() \n \n# Train the model using backpropagation \nhistory = model.fit( \n    X_train, y_train, \n    epochs=100, \n    batch_size=8, \n    validation_data=(X_test, y_test), \n    verbose=0 \n) \n \n# Evaluate the model \ntrain_loss, train_acc = model.evaluate( \n    X_train, y_train, verbose=0 \n) \n \ntest_loss, test_acc = model.evaluate( \n    X_test, y_test, verbose=0 \n) \n \nprint(f\"Training Accuracy: {train_acc:.4f}\") \nprint(f\"Test Accuracy: {test_acc:.4f}\") \n \n# Plot loss and accuracy \nplt.figure(figsize=(12, 4)) \n \n# Loss graph \nplt.subplot(1, 2, 1) \nplt.plot(history.history['loss'], label='Training Loss') \nplt.plot(history.history['val_loss'], label='Testing Loss') \n\nplt.xlabel('Epoch') \nplt.ylabel('Loss') \nplt.title('Loss (Backpropagation)') \nplt.legend() \nplt.grid(True) \n \n# Accuracy graph \nplt.subplot(1, 2, 2) \nplt.plot(history.history['accuracy'], label='Training Accuracy') \nplt.plot(history.history['val_accuracy'], label='Testing Accuracy') \nplt.xlabel('Epoch') \nplt.ylabel('Accuracy') \nplt.title('Model Accuracy') \nplt.legend() \nplt.grid(True) \n \nplt.tight_layout() \nplt.show() \n \n# Display backpropagation steps \nprint(\"\\nBackpropagation steps:\") \nprint(\"1. Forward pass: Compute predictions\") \nprint(\"2. Compute loss: Measure prediction error\") \nprint(\"3. Backward pass: Calculate gradients\") \nprint(\"4. Update weights using gradient descent\")",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-12",
+      "number": 12,
+      "question": "Experiment with different gradient descent optimizers (e.g., SGD, SGD with momentum) to train an MLP.",
+      "language": "python",
+      "code": "import matplotlib.pyplot as plt \nfrom sklearn.datasets import make_classification \nfrom sklearn.model_selection import train_test_split \nfrom sklearn.preprocessing import StandardScaler \nfrom tensorflow.keras.models import Sequential \nfrom tensorflow.keras.layers import Dense \nfrom tensorflow.keras.optimizers import SGD \n \nX, y = make_classification(n_samples=1000, n_features=10, random_state=42) \nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) \nsc = StandardScaler() \nX_train = sc.fit_transform(X_train) \nX_test = sc.transform(X_test) \n \ndef build_model(): \n    return Sequential([ \n\n        Dense(16, activation='relu', input_shape=(10,)), \n        Dense(16, activation='relu'), \n        Dense(1, activation='sigmoid') \n    ]) \n \nhistories = [] \nfor momentum in [0.0, 0.9]: \n    model = build_model() \n    model.compile(optimizer=SGD(0.01, momentum=momentum), \n                  loss='binary_crossentropy', metrics=['accuracy']) \n    h = model.fit(X_train, y_train, epochs=30, batch_size=32, \n                  validation_data=(X_test, y_test), verbose=0) \n    histories.append(h) \n    print(f\"Momentum={momentum}: Train={h.history['accuracy'][-1]:.4f}, \" \n          f\"Test={h.history['val_accuracy'][-1]:.4f}\") \n \nfor h, label in zip(histories, ['SGD', 'SGD + Momentum']): \n    plt.plot(h.history['loss'], label=label) \n \nplt.title('Training Loss Comparison') \nplt.xlabel('Epoch') \nplt.ylabel('Loss') \nplt.legend() \nplt.grid() \nplt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-13",
+      "number": 13,
+      "question": "Use MLP to analyze and visualize the changes in training and test errors with different model complexities.",
+      "language": "python",
+      "code": "import matplotlib.pyplot as plt \nfrom sklearn.datasets import make_classification \nfrom sklearn.model_selection import train_test_split \nfrom sklearn.preprocessing import StandardScaler \nfrom tensorflow.keras.models import Sequential \nfrom tensorflow.keras.layers import Dense \nfrom tensorflow.keras.optimizers import Adam \n \nX, y = make_classification(n_samples=500, n_features=10, random_state=42) \nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) \nsc = StandardScaler() \nX_train = sc.fit_transform(X_train) \nX_test = sc.transform(X_test) \n \nsizes = [2, 4, 8, 16, 32, 64, 128, 256] \ntrain_err, test_err = [], [] \n\n \nfor n in sizes: \n    model = Sequential([ \n        Dense(n, activation='relu', input_shape=(10,)), \n        Dense(n, activation='relu'), \n        Dense(1, activation='sigmoid') \n    ]) \n    model.compile(optimizer=Adam(0.001), \n                  loss='binary_crossentropy', metrics=['accuracy']) \n    h = model.fit(X_train, y_train, epochs=30, batch_size=32, verbose=0) \n    train_err.append(1 - model.evaluate(X_train, y_train, verbose=0)[1]) \n    test_err.append(1 - model.evaluate(X_test, y_test, verbose=0)[1]) \n    print(f\"Size={n}: Train Error={train_err[-1]:.4f}, Test Error={test_err[-1]:.4f}\") \n \nplt.plot(sizes, train_err, 'bo-', label='Training Error') \nplt.plot(sizes, test_err, 'rs--', label='Test Error') \nplt.xscale('log', base=2) \nplt.xlabel('Hidden Layer Size') \nplt.ylabel('Error Rate') \nplt.title('Model Complexity') \nplt.legend() \nplt.grid() \nplt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-14",
+      "number": 14,
+      "question": "Build a simple CNN for image classification.",
+      "language": "python",
+      "code": "import numpy as np \nimport matplotlib.pyplot as plt \nfrom tensorflow.keras.datasets import cifar10 \nfrom tensorflow.keras.models import Sequential \nfrom tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout \nfrom tensorflow.keras.utils import to_categorical \n \n(X_train, y_train), (X_test, y_test) = cifar10.load_data() \nX_train, X_test = X_train[:10000] / 255.0, X_test[:2000] / 255.0 \ny_train, y_test = y_train[:10000], y_test[:2000] \ny_train, y_test = to_categorical(y_train, 10), to_categorical(y_test, 10) \n \nmodel = Sequential([ \n    Conv2D(32, (3,3), activation='relu', input_shape=(32,32,3)), \n    MaxPooling2D((2,2)), \n    Conv2D(64, (3,3), activation='relu'), \n    MaxPooling2D((2,2)), \n    Flatten(), \n    Dense(128, activation='relu'), \n\n    Dropout(0.5), \n    Dense(10, activation='softmax') \n]) \n \nmodel.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy']) \nmodel.fit(X_train, y_train, epochs=5, batch_size=64, validation_data=(X_test, y_test)) \nprint(\"Test Accuracy:\", model.evaluate(X_test, y_test, verbose=0)[1]) \n \nclasses = ['airplane', 'automobile', 'bird', 'cat', 'deer', \n           'dog', 'frog', 'horse', 'ship', 'truck'] \npred = np.argmax(model.predict(X_test[:10], verbose=0), axis=1) \n \nplt.figure(figsize=(12,5)) \nfor i in range(10): \n    plt.subplot(2,5,i+1) \n    plt.imshow(X_test[i]) \n    plt.title(f\"True: {classes[np.argmax(y_test[i])]}\\nPred: {classes[pred[i]]}\") \n    plt.axis('off') \nplt.tight_layout() \nplt.show()",
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "lab programs.pdf",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-15",
+      "number": 15,
+      "question": "Use appropriate prompt for generating notes for MLP.",
+      "type": "prompt_task",
+      "language": null,
+      "code": null,
+      "prompt": "Generate comprehensive, textbook-style notes on Multilayer Perceptrons (MLPs) for undergraduate Computer Science students.\n\nCover the following topics:\n1. MLP architecture: input layer, hidden layers, output layer, and the forward flow of information.\n2. Activation functions: why non-linearity is needed; compare ReLU, Sigmoid, and Tanh.\n3. Forward propagation: explain weighted sums, activation functions, and output generation with mathematical formulas.\n4. Loss functions: Mean Squared Error (MSE) for regression and cross-entropy for classification.\n5. Backpropagation: explain the chain rule and how gradients are calculated.\n6. Weight updates: explain Gradient Descent, the learning rate, and the weight-update rule.\n7. Vanishing and exploding gradients: explain causes and solutions such as ReLU, Batch Normalization, and proper weight initialization.\n8. Regularization: explain L1, L2, Dropout, and Early Stopping.\n9. Hyperparameters: number of layers, neurons, learning rate, batch size, and epochs.\n10. Practical considerations: feature scaling, train/test split, and overfitting.\n11. Universal Approximation Theorem: explain how a network with one hidden layer can approximate a continuous function.\n\nInclude mathematical formulas, text-described diagrams, and a comparison table for activation functions. Organize the notes with clear headings and explanations suitable for undergraduate students.",
+      "runInstructions": [
+        "Copy the prompt.",
+        "Paste it into ChatGPT, Claude, or another LLM.",
+        "Review and save the generated notes."
+      ],
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "User-provided Program 15 prompt",
+        "pages": null
+      }
+    },
+    {
+      "id": "lab1-program-16",
+      "number": 16,
+      "question": "Summarize the research paper using appropriate prompt.",
+      "type": "prompt_task",
+      "language": null,
+      "code": null,
+      "prompt": "Summarize the given Machine Learning / Deep Learning research paper in a structured and easy-to-understand format.\n\nUse the paper title and authors provided, and cover these sections:\n1. Problem Statement: what problem is addressed and why it is important.\n2. Related Work: summarize relevant previous approaches and explain how this paper differs.\n3. Proposed Method: describe the model / architecture, layers, activation functions, loss function, training data, optimizer, hyperparameters, and key innovations.\n4. Experiments: describe datasets and their sizes, evaluation metrics, baseline methods, and numerical results.\n5. Ablation Studies: summarize what components were tested and what their effects were.\n6. Limitations: identify limitations acknowledged by the authors or evident from the paper.\n7. Key Takeaways: provide 3–5 important points.\n8. Personal Assessment: discuss strengths, weaknesses or unanswered questions, and possible follow-up work.\n\nUse clear section headings and bullet points. Base the summary on the paper text supplied; do not invent experimental results or details that are not stated.",
+      "runInstructions": [
+        "Copy the prompt.",
+        "Insert the research paper title and authors.",
+        "Paste the abstract or full paper text into an LLM.",
+        "Review the generated summary."
+      ],
+      "source": {
+        "manual": "Lab Manual 1",
+        "file": "User-provided Program 16 prompt",
+        "pages": null
+      }
+    }
+  ]
+}

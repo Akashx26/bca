@@ -1,0 +1,261 @@
+
+/* =========================================
+   COMPACT VS CODE EXPLORER
+========================================= */
+
+.sidebar {
+    width: 220px;
+    min-width: 190px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+.sidebar-header {
+    height: 35px;
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px 0 18px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.sidebar-title {
+    color: var(--text-primary);
+}
+
+.sidebar-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.sidebar-actions button {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.sidebar-actions button:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.sidebar-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.explorer-root {
+    height: 28px;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.explorer-root:hover {
+    background: var(--bg-hover);
+}
+
+.folder-arrow {
+    color: var(--text-secondary);
+    font-size: 11px;
+}
+
+.folder-symbol {
+    color: #dcb67a;
+    font-size: 13px;
+}
+
+.search-container {
+    padding: 5px 9px 4px;
+    flex-shrink: 0;
+}
+
+.search-container input {
+    width: 100%;
+    height: 26px;
+    padding: 0 7px;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    outline: none;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    font-size: 12px;
+}
+
+.search-container input:focus {
+    border-color: var(--accent-color);
+}
+
+.search-container input::placeholder {
+    color: var(--text-muted);
+}
+
+#explorerManualName {
+    height: 24px;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    padding: 0 13px;
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.program-explorer {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+}
+
+#programList {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.program-item {
+    width: 100%;
+    height: 22px;
+    min-height: 22px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 8px 0 20px;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    text-align: left;
+    font-family: var(--font-primary);
+    font-size: 12px;
+    line-height: 22px;
+    cursor: pointer;
+}
+
+.program-item:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.program-item.active {
+    background: var(--bg-active);
+    color: var(--text-primary);
+}
+
+.program-icon {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.program-icon svg {
+    width: 13px;
+    height: 13px;
+    display: block;
+}
+
+.program-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 1;
+}
+
+.empty-programs {
+    padding: 7px 12px;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.program-explorer::-webkit-scrollbar {
+    width: 7px;
+}
+
+.program-explorer::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.program-explorer::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+.program-explorer:hover::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 30;
+        width: min(260px, 85vw);
+        min-width: 190px;
+        max-width: 85vw;
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 5px 0 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .sidebar-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        display: block;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}

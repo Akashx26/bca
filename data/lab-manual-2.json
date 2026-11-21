@@ -1,0 +1,659 @@
+{
+  "manualId": "lab-manual-2",
+  "manualTitle": "Digital Image Processing Lab",
+  "subject": "Digital Image Processing Lab - V SEM BCA",
+  "subjectCode": "24BCA52P",
+  "sourceFile": "DIP LA MANUAL..docx.pdf",
+  "programCount": 11,
+  "structure": "Each main program is one sidebar entry. Its subExercises are displayed together on the same page, with an independent copy button for each code block.",
+  "programs": [
+    {
+      "id": "dip-01",
+      "number": 1,
+      "question": "Write a program to read and display an image using Python",
+      "subExercises": [
+        {
+          "id": "1a",
+          "question": "Import Libraries",
+          "aim": "Execute the required library imports.",
+          "language": "python",
+          "code": "import cv2\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport pandas as pd",
+          "copyable": true,
+          "sourceNotes": "The source lists OpenCV, NumPy, Matplotlib, and Pandas imports."
+        },
+        {
+          "id": "1b",
+          "question": "Read and Display",
+          "aim": "Read an image and display it using Matplotlib.",
+          "language": "python",
+          "code": "img = cv2.imread(\"sample.jpg\")\nplt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))\nplt.axis(\"off\")\nplt.show()",
+          "copyable": true
+        },
+        {
+          "id": "1c",
+          "question": "Resize",
+          "aim": "Resize the image to 300 × 300 pixels.",
+          "language": "python",
+          "code": "res = cv2.resize(img, (300, 300))\ncv2.imshow(\"Resize\", res)\ncv2.waitKey(0)",
+          "copyable": true
+        },
+        {
+          "id": "1d",
+          "question": "Grayscale",
+          "aim": "Convert the image to grayscale.",
+          "language": "python",
+          "code": "gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\ncv2.imshow(\"Gray\", gray)\ncv2.waitKey(0)",
+          "copyable": true
+        },
+        {
+          "id": "1e",
+          "question": "Black & White",
+          "aim": "Convert the grayscale image into a binary black-and-white image using thresholding.",
+          "language": "python",
+          "code": "_, bw = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)\ncv2.imshow(\"BW\", bw)\ncv2.waitKey(0)",
+          "copyable": true
+        },
+        {
+          "id": "1f",
+          "question": "Image Profile",
+          "aim": "Plot the intensity profile of row 100 of the grayscale image.",
+          "language": "python",
+          "code": "plt.plot(gray[100])\nplt.show()",
+          "copyable": true
+        },
+        {
+          "id": "1g",
+          "question": "RGB Planes",
+          "aim": "Split and display the red, green, and blue color planes.",
+          "language": "python",
+          "code": "b, g, r = cv2.split(img)\ncv2.imshow(\"R\", r)\ncv2.imshow(\"G\", g)\ncv2.imshow(\"B\", b)\ncv2.waitKey(0)",
+          "copyable": true
+        },
+        {
+          "id": "1h",
+          "question": "Merge RGB",
+          "aim": "Merge the individual color planes back into one image.",
+          "language": "python",
+          "code": "merged = cv2.merge((b, g, r))\ncv2.imshow(\"Merged\", merged)\ncv2.waitKey(0)",
+          "copyable": true
+        },
+        {
+          "id": "1i",
+          "question": "Write 2D Data",
+          "aim": "Create a 300 × 300 array, set a central square to white, save it, and display it.",
+          "language": "python",
+          "code": "data = np.zeros((300, 300), dtype=np.uint8)\ndata[50:250, 50:250] = 255\ncv2.imwrite(\"output.png\", data)\ncv2.imshow(\"Output\", data)\ncv2.waitKey(0)",
+          "copyable": true
+        }
+      ]
+    },
+    {
+      "id": "dip-02",
+      "number": 2,
+      "question": "Write and execute an image processing program using point processing methods",
+      "subExercises": [
+        {
+          "id": "2a",
+          "question": "Negative Image",
+          "aim": "Obtain the negative of an image.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\")\nnegative = 255 - img\ncv2.imshow(\"Original\", img)\ncv2.imshow(\"Negative\", negative)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "2b",
+          "question": "Flip Image",
+          "aim": "Flip the image horizontally, vertically, and in both directions.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\")\nh = cv2.flip(img, 1)\nv = cv2.flip(img, 0)\nb = cv2.flip(img, -1)\ncv2.imshow(\"Horizontal\", h)\ncv2.imshow(\"Vertical\", v)\ncv2.imshow(\"Both\", b)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "2c",
+          "question": "Thresholding",
+          "aim": "Convert a grayscale image to a binary image.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\", 0)\n_, th = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)\ncv2.imshow(\"Binary\", th)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "2d",
+          "question": "Contrast Stretching",
+          "aim": "Enhance image contrast using normalization.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\", 0)\nout = cv2.normalize(img, None, 0, 255, cv2.NORM_MINMAX)\ncv2.imshow(\"Contrast\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        }
+      ]
+    },
+    {
+      "id": "dip-03",
+      "number": 3,
+      "question": "Write and execute programs for image arithmetic operations",
+      "subExercises": [
+        {
+          "id": "3a",
+          "question": "Addition",
+          "aim": "Add two images. The source resizes the second image to match the first image before addition.",
+          "language": "python",
+          "code": "import cv2\n\nimg1 = cv2.imread(\"image1.jpg\")\nimg2 = cv2.imread(\"image2.jpg\")\n\nif img1 is None:\n    print(\"image1.jpg not found\")\n    exit()\n\nif img2 is None:\n    print(\"image2.jpg not found\")\n    exit()\n\nimg2 = cv2.resize(img2, (img1.shape[1], img1.shape[0]))\nresult = cv2.add(img1, img2)\ncv2.imshow(\"Image 1\", img1)\ncv2.imshow(\"Image 2\", img2)\ncv2.imshow(\"Addition\", result)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true,
+          "sourceNotes": "The PDF shows hard-coded Windows paths in this example; relative filenames are used here to match its folder-structure instructions. The image existence checks and processing steps are retained."
+        },
+        {
+          "id": "3b",
+          "question": "Subtraction",
+          "aim": "Subtract one image from another.",
+          "language": "python",
+          "code": "import cv2\n\nimg1 = cv2.imread(\"image1.jpg\")\nimg2 = cv2.imread(\"image2.jpg\")\nimg2 = cv2.resize(img2, (img1.shape[1], img1.shape[0]))\nresult = cv2.subtract(img1, img2)\ncv2.imshow(\"Subtraction\", result)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "3c",
+          "question": "Mean Value",
+          "aim": "Calculate and print the mean value of an image.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"image1.jpg\")\nprint(cv2.mean(img))\ncv2.imshow(\"Image\", img)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        }
+      ]
+    },
+    {
+      "id": "dip-04",
+      "number": 4,
+      "question": "Write and execute a program for image logical operations",
+      "subExercises": [
+        {
+          "id": "4a",
+          "question": "AND Operation",
+          "aim": "Perform a logical AND operation between two images.",
+          "language": "python",
+          "code": "import cv2\n\nimg1 = cv2.imread(\"image1.jpg\")\nimg2 = cv2.imread(\"image2.jpg\")\nimg2 = cv2.resize(img2, (img1.shape[1], img1.shape[0]))\nresult = cv2.bitwise_and(img1, img2)\ncv2.imshow(\"AND\", result)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "4b",
+          "question": "OR Operation",
+          "aim": "Perform a logical OR operation between two images.",
+          "language": "python",
+          "code": "import cv2\n\nimg1 = cv2.imread(\"image1.jpg\")\nimg2 = cv2.imread(\"image2.jpg\")\nimg2 = cv2.resize(img2, (img1.shape[1], img1.shape[0]))\nresult = cv2.bitwise_or(img1, img2)\ncv2.imshow(\"OR\", result)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "4c",
+          "question": "NOT Operation (Negative)",
+          "aim": "Perform a logical NOT operation on an image.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"image1.jpg\")\nresult = cv2.bitwise_not(img)\ncv2.imshow(\"NOT\", result)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        }
+      ]
+    },
+    {
+      "id": "dip-05",
+      "number": 5,
+      "question": "Write a program for histogram calculation and histogram equalization",
+      "subExercises": [
+        {
+          "id": "5a",
+          "question": "Histogram Calculation using Standard Function",
+          "aim": "Calculate the histogram of a grayscale image using OpenCV.",
+          "language": "python",
+          "code": "import cv2\nimport matplotlib.pyplot as plt\n\nimg = cv2.imread(\"sample.jpg\", 0)\nhist = cv2.calcHist([img], [0], None, [256], [0, 256])\nplt.plot(hist)\nplt.title(\"Histogram\")\nplt.xlabel(\"Pixel Intensity\")\nplt.ylabel(\"Frequency\")\nplt.show()",
+          "copyable": true
+        },
+        {
+          "id": "5b",
+          "question": "Histogram Equalization",
+          "aim": "Improve the contrast of a grayscale image using histogram equalization.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\", 0)\nequalized = cv2.equalizeHist(img)\ncv2.imshow(\"Original\", img)\ncv2.imshow(\"Equalized\", equalized)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        }
+      ]
+    },
+    {
+      "id": "dip-06",
+      "number": 6,
+      "question": "Write and execute a program for geometric transformation of an image",
+      "subExercises": [
+        {
+          "id": "6a",
+          "question": "Translation",
+          "aim": "Translate the image.",
+          "language": "python",
+          "code": "import cv2\nimport numpy as np\n\nimg = cv2.imread(\"sample.jpg\")\nM = np.float32([[1, 0, 20], [0, 1, 30]])\nout = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))\ncv2.imshow(\"Translated\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "6b",
+          "question": "Scaling",
+          "aim": "Scale the image.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\")\nout = cv2.resize(img, None, fx=8, fy=5)\ncv2.imshow(\"Scaled\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "6c",
+          "question": "Rotation",
+          "aim": "Rotate the image by 45 degrees.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\")\nM = cv2.getRotationMatrix2D((img.shape[1] // 2, img.shape[0] // 2), 45, 1)\nout = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))\ncv2.imshow(\"Rotated\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "6d",
+          "question": "Shrinking",
+          "aim": "Reduce the size of the image by half in both dimensions.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\")\nout = cv2.resize(img, None, fx=0.5, fy=0.5)\ncv2.imshow(\"Shrink\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "6e",
+          "question": "Zooming",
+          "aim": "Enlarge the image by a factor of three in both dimensions.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\")\nout = cv2.resize(img, None, fx=3, fy=3)\ncv2.imshow(\"Zoom\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        }
+      ]
+    },
+    {
+      "id": "dip-07",
+      "number": 7,
+      "question": "Understand various image noise models and write programs for image restoration and noise removal",
+      "subExercises": [
+        {
+          "id": "7a",
+          "question": "Image Restoration",
+          "aim": "Restore an image using a Gaussian filter.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\")\nout = cv2.GaussianBlur(img, (5, 5), 0)\ncv2.imshow(\"Restored\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "7b",
+          "question": "Remove Salt and Pepper Noise",
+          "aim": "Use a median filter to remove salt-and-pepper noise.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\")\nout = cv2.medianBlur(img, 5)\ncv2.imshow(\"Median\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "7c",
+          "question": "Minimize Gaussian Noise",
+          "aim": "Use Gaussian blur to minimize Gaussian noise.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\")\nout = cv2.GaussianBlur(img, (5, 5), 0)\ncv2.imshow(\"Gaussian\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "7d",
+          "question": "Median Filter",
+          "aim": "Apply a median filter to the image.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\")\nout = cv2.medianBlur(img, 3)\ncv2.imshow(\"Output\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        }
+      ]
+    },
+    {
+      "id": "dip-08",
+      "number": 8,
+      "question": "Write and execute programs to use spatial low-pass and high-pass filters",
+      "subExercises": [
+        {
+          "id": "8a",
+          "question": "Low Pass Filter",
+          "aim": "Blur the image using an averaging filter.",
+          "language": "python",
+          "code": "import cv2\nimport numpy as np\n\nimg = cv2.imread(\"sample.jpg\")\nkernel = np.ones((5, 5), np.float32) / 25\nout = cv2.filter2D(img, -1, kernel)\ncv2.imshow(\"Original\", img)\ncv2.imshow(\"Low Pass\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "8b",
+          "question": "High Pass Filter",
+          "aim": "Enhance edges using a high-pass kernel.",
+          "language": "python",
+          "code": "import cv2\nimport numpy as np\n\nimg = cv2.imread(\"sample.jpg\")\nkernel = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])\nout = cv2.filter2D(img, -1, kernel)\ncv2.imshow(\"Original\", img)\ncv2.imshow(\"High Pass\", out)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        }
+      ]
+    },
+    {
+      "id": "dip-09",
+      "number": 9,
+      "question": "Write and execute programs for image frequency-domain filtering",
+      "subExercises": [
+        {
+          "id": "9a",
+          "question": "Apply FFT on an Image",
+          "aim": "Compute the Fast Fourier Transform (FFT) of an image and display its magnitude spectrum.",
+          "language": "python",
+          "code": "import cv2\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nimg = cv2.imread(\"sample.jpg\", 0)\nf = np.fft.fft2(img)\nfshift = np.fft.fftshift(f)\nmagnitude = 20 * np.log(np.abs(fshift) + 1)\nplt.imshow(magnitude, cmap=\"gray\")\nplt.title(\"FFT Magnitude Spectrum\")\nplt.show()",
+          "copyable": true
+        },
+        {
+          "id": "9b",
+          "question": "Low-Pass and High-Pass Filtering",
+          "aim": "Apply frequency-domain low-pass and high-pass filters and display their spectra.",
+          "language": "python",
+          "code": "import cv2\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nimg = cv2.imread(\"sample.jpg\", 0)\nf = np.fft.fft2(img)\nfshift = np.fft.fftshift(f)\n\nrows, cols = img.shape\ncrow, ccol = rows // 2, cols // 2\n\nmask = np.zeros((rows, cols), np.uint8)\nmask[crow-30:crow+30, ccol-30:ccol+30] = 1\n\nlow = fshift * mask\nhigh = fshift * (1 - mask)\n\nplt.imshow(np.log(np.abs(low) + 1), cmap=\"gray\")\nplt.title(\"Low Pass\")\nplt.show()\n\nplt.imshow(np.log(np.abs(high) + 1), cmap=\"gray\")\nplt.title(\"High Pass\")\nplt.show()",
+          "copyable": true
+        },
+        {
+          "id": "9c",
+          "question": "Apply IFFT to Reconstruct Image",
+          "aim": "Reconstruct the image using the Inverse FFT.",
+          "language": "python",
+          "code": "import cv2\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nimg = cv2.imread(\"sample.jpg\", 0)\nf = np.fft.fft2(img)\nfshift = np.fft.fftshift(f)\n\nishift = np.fft.ifftshift(fshift)\nimg_back = np.fft.ifft2(ishift)\nimg_back = np.abs(img_back)\n\nplt.imshow(img_back, cmap=\"gray\")\nplt.title(\"Reconstructed Image\")\nplt.show()",
+          "copyable": true
+        }
+      ]
+    },
+    {
+      "id": "dip-10",
+      "number": 10,
+      "question": "Edge detection using different edge detection masks",
+      "subExercises": [
+        {
+          "id": "10a",
+          "question": "Sobel Edge Detection",
+          "aim": "Detect edges using the Sobel operator.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\", 0)\nsx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=3)\nsy = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=3)\ncv2.imshow(\"Sobel X\", sx.astype(\"uint8\"))\ncv2.imshow(\"Sobel Y\", sy.astype(\"uint8\"))\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "10b",
+          "question": "Laplacian Edge Detection",
+          "aim": "Detect edges using the Laplacian operator.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\", 0)\nlap = cv2.Laplacian(img, cv2.CV_64F)\ncv2.imshow(\"Laplacian\", lap.astype(\"uint8\"))\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "10c",
+          "question": "Canny Edge Detection",
+          "aim": "Detect edges using the Canny algorithm.",
+          "language": "python",
+          "code": "import cv2\n\nimg = cv2.imread(\"sample.jpg\", 0)\nedges = cv2.Canny(img, 100, 200)\ncv2.imshow(\"Canny\", edges)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        }
+      ]
+    },
+    {
+      "id": "dip-11",
+      "number": 11,
+      "question": "Morphological operations (erosion and dilation)",
+      "subExercises": [
+        {
+          "id": "11a",
+          "question": "Erosion",
+          "aim": "Perform erosion on a grayscale image using a 5 × 5 kernel.",
+          "language": "python",
+          "code": "import cv2\nimport numpy as np\n\nimg = cv2.imread(\"sample.jpg\", 0)\nkernel = np.ones((5, 5), np.uint8)\neroded = cv2.erode(img, kernel, iterations=1)\ncv2.imshow(\"Original\", img)\ncv2.imshow(\"Erosion\", eroded)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        },
+        {
+          "id": "11b",
+          "question": "Dilation",
+          "aim": "Perform dilation on a grayscale image using a 5 × 5 kernel.",
+          "language": "python",
+          "code": "import cv2\nimport numpy as np\n\nimg = cv2.imread(\"sample.jpg\", 0)\nkernel = np.ones((5, 5), np.uint8)\ndilated = cv2.dilate(img, kernel, iterations=1)\ncv2.imshow(\"Original\", img)\ncv2.imshow(\"Dilation\", dilated)\ncv2.waitKey(0)\ncv2.destroyAllWindows()",
+          "copyable": true
+        }
+      ]
+    }
+  ],
+  "vivaQuestions": [
+    {
+      "id": "viva-01",
+      "number": 1,
+      "question": "What is Digital Image Processing?",
+      "answer": "It is the process of manipulating digital images using computer algorithms to improve image quality or extract useful information."
+    },
+    {
+      "id": "viva-02",
+      "number": 2,
+      "question": "What is a pixel?",
+      "answer": "A pixel is the smallest element of a digital image."
+    },
+    {
+      "id": "viva-03",
+      "number": 3,
+      "question": "What is the grayscale pixel range?",
+      "answer": "0 to 255, where 0 is black and 255 is white."
+    },
+    {
+      "id": "viva-04",
+      "number": 4,
+      "question": "What is OpenCV?",
+      "answer": "An open-source computer vision and image processing library."
+    },
+    {
+      "id": "viva-05",
+      "number": 5,
+      "question": "What is NumPy?",
+      "answer": "A Python library for numerical and array operations."
+    },
+    {
+      "id": "viva-06",
+      "number": 6,
+      "question": "What is Matplotlib?",
+      "answer": "A Python library used for plotting graphs and displaying images."
+    },
+    {
+      "id": "viva-07",
+      "number": 7,
+      "question": "What is image negative?",
+      "answer": "It inverts pixel values using 255 - pixel value."
+    },
+    {
+      "id": "viva-08",
+      "number": 8,
+      "question": "What is thresholding?",
+      "answer": "It converts a grayscale image into a binary image."
+    },
+    {
+      "id": "viva-09",
+      "number": 9,
+      "question": "What is contrast stretching?",
+      "answer": "A technique to improve image contrast."
+    },
+    {
+      "id": "viva-10",
+      "number": 10,
+      "question": "What is image addition?",
+      "answer": "Combines the intensity values of two images."
+    },
+    {
+      "id": "viva-11",
+      "number": 11,
+      "question": "What is image subtraction?",
+      "answer": "Finds the difference between two images."
+    },
+    {
+      "id": "viva-12",
+      "number": 12,
+      "question": "Why should two images have the same size?",
+      "answer": "To perform pixel-by-pixel operations correctly."
+    },
+    {
+      "id": "viva-13",
+      "number": 13,
+      "question": "What is the mean value of an image?",
+      "answer": "The average intensity value of all pixels."
+    },
+    {
+      "id": "viva-14",
+      "number": 14,
+      "question": "What is a histogram?",
+      "answer": "A graph showing the distribution of pixel intensities."
+    },
+    {
+      "id": "viva-15",
+      "number": 15,
+      "question": "Why is histogram equalization used?",
+      "answer": "To improve image contrast."
+    },
+    {
+      "id": "viva-16",
+      "number": 16,
+      "question": "What is translation?",
+      "answer": "Moving an image horizontally or vertically."
+    },
+    {
+      "id": "viva-17",
+      "number": 17,
+      "question": "What is scaling?",
+      "answer": "Changing the size of an image."
+    },
+    {
+      "id": "viva-18",
+      "number": 18,
+      "question": "What is rotation?",
+      "answer": "Turning an image by a specified angle."
+    },
+    {
+      "id": "viva-19",
+      "number": 19,
+      "question": "What is zooming?",
+      "answer": "Enlarging an image."
+    },
+    {
+      "id": "viva-20",
+      "number": 20,
+      "question": "What is shrinking?",
+      "answer": "Reducing the size of an image."
+    },
+    {
+      "id": "viva-21",
+      "number": 21,
+      "question": "What is image restoration?",
+      "answer": "Removing noise or improving degraded images."
+    },
+    {
+      "id": "viva-22",
+      "number": 22,
+      "question": "What is salt and pepper noise?",
+      "answer": "Random black and white pixels in an image."
+    },
+    {
+      "id": "viva-23",
+      "number": 23,
+      "question": "What is Gaussian noise?",
+      "answer": "Random intensity variations following a Gaussian distribution."
+    },
+    {
+      "id": "viva-24",
+      "number": 24,
+      "question": "What is a median filter?",
+      "answer": "A nonlinear filter used to remove salt and pepper noise."
+    },
+    {
+      "id": "viva-25",
+      "number": 25,
+      "question": "What is a Gaussian filter?",
+      "answer": "A smoothing filter used to reduce Gaussian noise."
+    },
+    {
+      "id": "viva-26",
+      "number": 26,
+      "question": "What is a low-pass filter?",
+      "answer": "It smooths the image by removing high-frequency components."
+    },
+    {
+      "id": "viva-27",
+      "number": 27,
+      "question": "What is a high-pass filter?",
+      "answer": "It enhances edges by preserving high-frequency components."
+    },
+    {
+      "id": "viva-28",
+      "number": 28,
+      "question": "What is FFT?",
+      "answer": "Fast Fourier Transform converts an image into the frequency domain."
+    },
+    {
+      "id": "viva-29",
+      "number": 29,
+      "question": "What is IFFT?",
+      "answer": "Inverse FFT reconstructs the image from the frequency domain."
+    },
+    {
+      "id": "viva-30",
+      "number": 30,
+      "question": "What is edge detection?",
+      "answer": "The process of identifying object boundaries in an image."
+    },
+    {
+      "id": "viva-31",
+      "number": 31,
+      "question": "What is the Sobel operator?",
+      "answer": "An edge detector based on image gradients."
+    },
+    {
+      "id": "viva-32",
+      "number": 32,
+      "question": "What is the Laplacian operator?",
+      "answer": "A second-order derivative edge detector."
+    },
+    {
+      "id": "viva-33",
+      "number": 33,
+      "question": "What is the Canny edge detector?",
+      "answer": "A multi-stage algorithm that accurately detects edges."
+    },
+    {
+      "id": "viva-34",
+      "number": 34,
+      "question": "What are morphological operations?",
+      "answer": "Operations that process image shapes using a structuring element."
+    },
+    {
+      "id": "viva-35",
+      "number": 35,
+      "question": "What is erosion?",
+      "answer": "It shrinks white regions in a binary image."
+    },
+    {
+      "id": "viva-36",
+      "number": 36,
+      "question": "What is dilation?",
+      "answer": "It expands white regions in a binary image."
+    },
+    {
+      "id": "viva-37",
+      "number": 37,
+      "question": "What is a structuring element?",
+      "answer": "A kernel used in morphological operations."
+    },
+    {
+      "id": "viva-38",
+      "number": 38,
+      "question": "What is cv2.imread()?",
+      "answer": "Reads an image from a file."
+    },
+    {
+      "id": "viva-39",
+      "number": 39,
+      "question": "What is cv2.imshow()?",
+      "answer": "Displays an image in a window."
+    },
+    {
+      "id": "viva-40",
+      "number": 40,
+      "question": "What is cv2.imwrite()?",
+      "answer": "Saves an image to a file."
+    }
+  ],
+  "sourceNotes": [
+    "The source PDF contains setup instructions on Python installation, VS Code interpreter selection, and package installation; these are not numbered lab programs and are not included as sidebar program entries.",
+    "The source labels the point-processing section with a repeated 'Program 1' heading, followed by exercises 2(a) to 2(d). It is represented as main Program 2 to maintain the manual's subsequent numbering through Program 11.",
+    "The source code was transcribed from PDF text extraction. Line breaks and indentation were normalized where PDF extraction had merged or split code lines.",
+    "For Program 3(a), the PDF contains machine-specific Windows image paths; the JSON uses the relative filenames image1.jpg and image2.jpg as stated in the folder instructions.",
+    "The PDF's first program includes library imports and separate image-processing exercises 1(a) through 1(i)."
+  ]
+}
